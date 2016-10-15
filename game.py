@@ -1,5 +1,6 @@
 from copy import deepcopy
 
+default_map = [['t', 'l', 'l', 'e'], ['m', 'm', 'l', 'l'], ['l', 'l', 'l', 'p']]
 
 def load_map(map_file):
     map = []
@@ -11,12 +12,12 @@ def load_map(map_file):
     return map
 
 
-def map_check(map):
+def map_is_valid(map):
     # checks that map is a rectangular grid and that each entry is valid
     cols = len(map[0])
-    for row in map[1:]:
+    for row in map[1:]: #if the map is a 1x1 this will throw an our of bounds exception
         if len(row) != cols:
-            return -1
+            return False
     # check that only valid entries exist
     entries = []
     for row in map:
@@ -24,12 +25,12 @@ def map_check(map):
     entries = set(entries)
     for entry in entries:
         if entry not in ['l', 'm', 'p', 't', 'e']:
-            return -1
+            return False
     # make sure that a player has been placed on the map, and that there is treasure to collect and walkable land
     if not entries.issuperset({'l', 't', 'p'}):
-        return -1
+        return False
     # todo: create a solvability checker to only allow solvable maps
-    return 0
+    return True
 
 
 class Player:
@@ -49,11 +50,11 @@ class Game:
     def __init__(self, map_file=None):
         if map_file:
             self.map = load_map(map_file)
-            if map_check(self.map):
-                print("Error in loaded map, initialising to default")
-                self.map = [['t', 'l', 'l', 'e'], ['m', 'm', 'l', 'l'], ['l', 'l', 'l', 'p']]
+            if not map_is_valid(self.map):
+                print("Error in loaded map, initializing to default")
+                self.map = default_map
         else:
-            self.map = [['t', 'l', 'l', 'e'], ['m', 'm', 'l', 'l'], ['l', 'l', 'l', 'p']]
+            self.map = default_map
         self.rows = len(self.map)
         self.cols = len(self.map[0])
         for i, row in enumerate(self.map):
@@ -64,7 +65,7 @@ class Game:
             self.p1 = Player(i, j)
             self.map[i][j] = 'l'
 
-    def visualise(self):
+    def visualize(self):
         # Display map in a nice way
         current_map = deepcopy(self.map)
         i, j = self.p1.location()
