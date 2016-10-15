@@ -128,7 +128,7 @@ class Game:
         print("You're playing 'Exciting Adventure Quest'!")
         print("Good luck!")
         while True:
-            self.visualise()
+            self.visualize()
             print("Find the treasure! Please choose a move ('u' = up, 'd' = down, 'l' = left, 'r' = right):\n")
             while True:
                 m = input().strip()
