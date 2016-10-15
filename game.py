@@ -64,7 +64,7 @@ class Game:
             self.p1 = Player(i, j)
             self.map[i][j] = 'l'
 
-    def visualise(self):
+    def visualize(self): #spelling this the right way
         # Display map in a nice way
         current_map = deepcopy(self.map)
         i, j = self.p1.location()
@@ -127,7 +127,7 @@ class Game:
         print("You're playing 'Exciting Adventure Quest'!")
         print("Good luck!")
         while True:
-            self.visualise()
+            self.visualize()
             print("Find the treasure! Please choose a move ('u' = up, 'd' = down, 'l' = left, 'r' = right):\n")
             while True:
                 m = input().strip()
