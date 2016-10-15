@@ -12,7 +12,7 @@ def load_map(map_file):
     return map
 
 
-def False(map):
+def map_is_valid(map):
     # checks that map is a rectangular grid and that each entry is valid
     cols = len(map[0])
     for row in map[1:]: #if the map is a 1x1 this will throw an our of bounds exception
